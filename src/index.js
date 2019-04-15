@@ -1,14 +1,74 @@
 // @Flow
 
-import React, { Component } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-import { Router, Stack, Scene } from 'react-native-router-flux';
-import Home from './containers/Home';
+import React from 'react';
+import { View } from 'react-native';
+import { Router, Stack, Scene, Tabs } from 'react-native-router-flux';
+import Icon from 'react-native-vector-icons/Ionicons';
+import { ApolloProvider } from 'react-apollo';
+import client from './graphql';
+import Search from './containers/Search';
+
+const TabIcon = ({ focused, tabBarLabel }) => {
+  return (
+    <View>
+      <Icon
+        name={tabBarLabel}
+        style={{
+          color: focused ? '#333' : '#bebebe',
+          fontSize: 28,
+        }}
+      />
+    </View>
+  );
+};
 
 export default () => (
-  <Router>
-    <Stack key="root">
-      <Scene key="home" component={Home} title="Home" />
-    </Stack>
-  </Router>
+  <ApolloProvider client={client}>
+    <Router>
+      <Stack key="root">
+        <Tabs
+          key="tabbar"
+          routeName="tabbar"
+          backToInitial
+          navigationBar={false}
+          hideNavBar
+          labelStyle={{ color: '#333', display: 'none' }}
+          tabBarPosition="bottom"
+          tabs
+          animationEnabled
+          swipeEnabled
+        >
+          <Scene
+            icon={TabIcon}
+            tabBarLabel="md-home"
+            component={Search}
+            lazy
+            hideNavBar
+            initial
+          />
+          <Scene
+            icon={TabIcon}
+            tabBarLabel="md-notifications"
+            component={Search}
+            lazy
+            hideNavBar
+          />
+          <Scene
+            icon={TabIcon}
+            tabBarLabel="md-search"
+            component={Search}
+            lazy
+            hideNavBar
+          />
+          <Scene
+            icon={TabIcon}
+            tabBarLabel="md-person"
+            component={Search}
+            lazy
+            hideNavBar
+          />
+        </Tabs>
+      </Stack>
+    </Router>
+  </ApolloProvider>
 )
