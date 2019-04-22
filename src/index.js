@@ -7,6 +7,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import { ApolloProvider } from 'react-apollo';
 import client from './graphql';
 import Search from './containers/Search';
+import User from './containers/User';
 
 const TabIcon = ({ focused, tabBarLabel }) => {
   return (
@@ -44,7 +45,6 @@ export default () => (
             component={Search}
             lazy
             hideNavBar
-            initial
           />
           <Scene
             icon={TabIcon}
@@ -63,9 +63,10 @@ export default () => (
           <Scene
             icon={TabIcon}
             tabBarLabel="md-person"
-            component={Search}
+            component={User}
             lazy
             hideNavBar
+            initial
           />
         </Tabs>
       </Stack>
